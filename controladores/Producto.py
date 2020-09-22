@@ -41,7 +41,7 @@ class Producto():
 			sql = "INSERT INTO producto (Nombre, Unidades, Peso_unitario, Volumen_unitario, Periodo_caducidad, Precio_unitario, Tipo, Imagen) VALUES(%s, %s, %s, %s, %s, %s, %s, %s);"
 			cursor.execute(sql,data)
 			cnx.commit()
-			return {"estado":"insertado"}, 200
+			return {"mensaje":"insertado"}, 201
 		except KeyError:
 			#si no es un json simple lo que llega o si llegan menos propiedades de las necesarias
 			return {"mensaje":"Propiedad necesaria no pasada"}, 400
