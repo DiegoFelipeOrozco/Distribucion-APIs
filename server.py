@@ -10,3 +10,7 @@ def getAll():
 def insertANewOne():
 	body = request.json
 	return (Producto.create(body))
+
+@app.route('/productos', methods=['DELETE'])
+def destroy():
+	return (Producto.delete(request.args.get('nombre', '')))

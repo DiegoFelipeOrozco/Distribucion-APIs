@@ -54,3 +54,19 @@ class Producto():
 		finally:
 			cursor.close()
 			cursor = cnx.cursor()
+
+	def delete(id):
+		cnx = conexion()
+		cursor = cnx.cursor()
+		try:
+			data = (id,)
+			sql = "DELETE FROM producto WHERE Nombre=%s;"
+			cursor.execute(sql,data)
+			cnx.commit()
+			if (cursor.rowcount == 0):
+				return {"mensaje":"no se encontro registro con ese id"}, 200
+			else:
+				return {"mensaje":"eliminado"}, 200
+		finally:
+			cursor.close()
+			cursor = cnx.cursor()
