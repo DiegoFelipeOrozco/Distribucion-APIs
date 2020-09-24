@@ -8,3 +8,4 @@ instance/
 .webassets-cache
 
 /db/conexion.py
+/recursos/subidos/
