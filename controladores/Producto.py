@@ -70,3 +70,21 @@ class Producto():
 		finally:
 			cursor.close()
 			cursor = cnx.cursor()
+
+	def update(id, body):
+		cnx = conexion()
+		cursor = cnx.cursor()
+		try:
+			parametros = ""
+			for clave in body:
+				parametros = parametros + str(clave) + "=%(" + clave + ")s,"
+			sql = "UPDATE producto SET " + parametros[0:-1] + ";"
+			cursor.execute(sql, body)
+			cnx.commit()
+			return {"mensaje":"modificado"}, 200
+		except DatabaseError as e:
+			#si los tipos de entrada no son los esperados
+			return {"mensaje":"Restriccion de base de datos violada: " + str(e)}, 500
+		finally:
+			cursor.close()
+			cursor = cnx.cursor()

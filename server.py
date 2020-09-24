@@ -8,9 +8,12 @@ def getAll():
 
 @app.route('/productos', methods=['POST'])
 def insertANewOne():
-	body = request.json
-	return (Producto.create(body))
+	return (Producto.create(request.json))
 
 @app.route('/productos', methods=['DELETE'])
 def destroy():
 	return (Producto.delete(request.args.get('nombre', '')))
+
+@app.route('/productos', methods=['PUT'])
+def update():
+	return (Producto.update(request.args.get('nombre', ''),request.json))
