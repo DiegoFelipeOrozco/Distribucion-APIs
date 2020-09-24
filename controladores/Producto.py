@@ -9,7 +9,7 @@ class Producto():
 		cursor = cnx.cursor()
 		try:
 			lista = []
-			cursor.execute("SELECT Nombre, Unidades, Peso_unitario, Volumen_unitario, Periodo_caducidad, Precio_unitario, Tipo FROM producto")
+			cursor.execute("SELECT Nombre, Unidades, Peso_unitario, Volumen_unitario, Periodo_caducidad, Precio_unitario, Tipo, Imagen FROM producto")
 			rows = cursor.fetchall()
 			columns = [i[0] for i in cursor.description]
 			for row in rows:
@@ -78,8 +78,11 @@ class Producto():
 			parametros = ""
 			for clave in body:
 				parametros = parametros + str(clave) + "=%(" + clave + ")s,"
-			sql = "UPDATE producto SET " + parametros[0:-1] + ";"
-			cursor.execute(sql, body)
+			sql = "UPDATE producto SET " + parametros[0:-1] + " WHERE nombre=%(id)s;"
+			data = {}
+			data.update(body)
+			data.update({"id":id})
+			cursor.execute(sql, data)
 			cnx.commit()
 			return {"mensaje":"modificado"}, 200
 		except DatabaseError as e:
