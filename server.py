@@ -17,3 +17,6 @@ def destroy():
 @app.route('/productos', methods=['PUT'])
 def update():
 	return (Producto.update(request.args.get('nombre', ''),request.json))
+
+if __name__=="__main__":
+	app.run(port=5000)

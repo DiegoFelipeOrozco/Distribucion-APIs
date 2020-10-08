@@ -9,7 +9,7 @@ class Producto():
 		cursor = cnx.cursor()
 		try:
 			lista = []
-			cursor.execute("SELECT Nombre, Unidades, Peso_unitario, Volumen_unitario, Periodo_caducidad, Precio_unitario, Tipo, Imagen FROM producto")
+			cursor.execute("SELECT Nombre, Unidades, Peso_unitario, Volumen_unitario, Periodo_caducidad, Precio_unitario, Tipo, Imagen FROM productos")
 			rows = cursor.fetchall()
 			columns = [i[0] for i in cursor.description]
 			for row in rows:
@@ -38,7 +38,7 @@ class Producto():
 			}
 			bodySchema.update(body)
 			data = (bodySchema["nombre"],bodySchema["unidades"],bodySchema["peso"],bodySchema["volumen"],bodySchema["caducidad"],bodySchema["precio"],bodySchema["tipo"],bodySchema["imagen"])
-			sql = "INSERT INTO producto (Nombre, Unidades, Peso_unitario, Volumen_unitario, Periodo_caducidad, Precio_unitario, Tipo, Imagen) VALUES(%s, %s, %s, %s, %s, %s, %s, %s);"
+			sql = "INSERT INTO productos (Nombre, Unidades, Peso_unitario, Volumen_unitario, Periodo_caducidad, Precio_unitario, Tipo, Imagen) VALUES(%s, %s, %s, %s, %s, %s, %s, %s);"
 			cursor.execute(sql,data)
 			cnx.commit()
 			return {"mensaje":"insertado"}, 201
@@ -60,7 +60,7 @@ class Producto():
 		cursor = cnx.cursor()
 		try:
 			data = (id,)
-			sql = "DELETE FROM producto WHERE Nombre=%s;"
+			sql = "DELETE FROM productos WHERE Nombre=%s;"
 			cursor.execute(sql,data)
 			cnx.commit()
 			if (cursor.rowcount == 0):
@@ -78,7 +78,7 @@ class Producto():
 			parametros = ""
 			for clave in body:
 				parametros = parametros + str(clave) + "=%(" + clave + ")s,"
-			sql = "UPDATE producto SET " + parametros[0:-1] + " WHERE nombre=%(id)s;"
+			sql = "UPDATE productos SET " + parametros[0:-1] + " WHERE nombre=%(id)s;"
 			data = {}
 			data.update(body)
 			data.update({"id":id})
